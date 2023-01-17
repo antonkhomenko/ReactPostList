@@ -1,0 +1,11 @@
+.myTextArea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 3px solid cornflowerblue;
+    resize: none;
+    font-size: 14px;
+}
+
+.myTextArea:focus {
+    outline: none;
+}
