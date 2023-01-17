@@ -43,3 +43,8 @@
     margin-top: 10px;
     gap: 10px;
 }
+
+.PostSort-block {
+    display: flex;
+    justify-content: flex-end;
+}
