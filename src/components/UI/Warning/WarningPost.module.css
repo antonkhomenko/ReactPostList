@@ -3,5 +3,23 @@
     border: 3px solid #9f9f01;
     border-radius: 5px;
     margin-top: 15px;
-    padding: 10px 15px;
+    padding: 15px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.warningPost:before {
+    content: '';
+    background-image: url(/src/assets/warning-icon.svg);
+    background-position: center;
+    background-size: 40px;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -28px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
 }
