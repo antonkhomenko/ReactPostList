@@ -7,6 +7,8 @@ import WarningPost from "./components/UI/Warning/WarningPost.jsx";
 import MySelect from "./components/UI/select/MySelect.jsx";
 import PostSearch from "./components/PostSearch.jsx";
 import PostFilter from "./components/PostFilter.jsx";
+import MyModal from "./components/UI/MyModal/MyModal.jsx";
+import MyButton from "./components/UI/button/MyButton.jsx";
 
 
 export default function App() {
@@ -18,10 +20,9 @@ export default function App() {
         {id: 4, title: 'TypeScript', body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur corporis et fugiat illo, inventore iusto minus natus nobis nostrum optio provident quis quo repudiandae saepe sed voluptatum. Officiis.'},
         {id: 5, title: 'AAAScript', body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda consequatur corporis et fugiat illo, inventore iusto minus natus nobis nostrum optio provident quis quo repudiandae saepe sed voluptatum. Officiis.'},
     ]);
-    // const [selectedSort, setSelectedSort] = useState('');
-    // const [searchQuery, setSearchQuery] = useState('');
 
-    const [filter, setFilter] = useState({sort: '', searchQuery: ''})
+    const [filter, setFilter] = useState({sort: '', searchQuery: ''});
+    const [modal, setModal] = useState(false);
 
     function addPostToState(newPost) {
         setPosts([...posts, newPost]);
@@ -72,16 +73,18 @@ export default function App() {
 
     return (
         <div className='App'>
-            <PostForm create={addPostToState}/>
-            <hr style={{margin: '10px 0'}}/>
+            <div className='PostHeader'>
+                <span className='PostHeader__counter'>Posts: {posts.length}</span>
+                <MyButton onClick={() => setModal(true)}>Create post</MyButton>
+            </div>
+            <MyModal visible={modal} setVisible={setModal}>
+                <PostForm create={addPostToState}/>
+            </MyModal>
             <PostFilter
                 filter={filter}
                 setFilter={setFilter}
             />
-            {searchedSortedPosts.length
-                ? <PostLIst posts={searchedSortedPosts} remove={deletePost} title='Posts List'/>
-                : <WarningPost/>
-            }
+            <PostLIst posts={searchedSortedPosts} remove={deletePost} title='Posts List'/>
         </div>
     )
 }

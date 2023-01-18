@@ -52,3 +52,16 @@
 .PostSearch {
     margin: 10px 0;
 }
+
+.PostHeader {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.PostHeader__counter {
+    color: #807e7e;
+    font-size: 16px;
+}

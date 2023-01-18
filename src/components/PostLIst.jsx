@@ -1,10 +1,18 @@
 import PostItem from "./PostItem.jsx";
+import WarningPost from "./UI/Warning/WarningPost.jsx";
 
 const PostLIst = ({posts, title, remove}) => {
+
+    if(!posts.length) {
+        return <WarningPost/>
+    }
+
     return (
         <div className='PostList'>
-            <h2>{title}</h2>
-            {posts.map((item, index) => <PostItem  remove={remove} number={index + 1} post={item} key={item.id}/>)}
+            <h3>{title}</h3>
+            {
+                posts.map((p, index) => <PostItem remove={remove}  number={index + 1} post={p} key={p.id}/>)
+            }
         </div>
     );
 };

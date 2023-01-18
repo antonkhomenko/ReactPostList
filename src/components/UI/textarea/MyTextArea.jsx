@@ -6,7 +6,7 @@ const MyTextArea = React.forwardRef((props,ref) => {
         <textarea
             {...props}
             cols='10'
-            rows='5'
+            rows='20'
             className={classes.myTextArea}
             ref={ref}
         />
