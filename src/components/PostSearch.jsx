@@ -6,7 +6,7 @@ const PostSearch = ({value, onChange}) => {
 
 
     return (
-        <div className='PostSearch'>
+        <div className='post'>
             <MyInput placeholder='Search...' value={value} onChange={onChange}/>
         </div>
     );

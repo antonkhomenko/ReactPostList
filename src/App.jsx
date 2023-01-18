@@ -26,6 +26,7 @@ export default function App() {
 
     function addPostToState(newPost) {
         setPosts([...posts, newPost]);
+        setModal(false);
     }
 
     function deletePost(post) {

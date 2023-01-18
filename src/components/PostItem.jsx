@@ -1,4 +1,5 @@
 import DeleteButton from "./UI/button/DeleteButton.jsx";
+import React from 'react';
 
 export default function PostItem(props) {
 

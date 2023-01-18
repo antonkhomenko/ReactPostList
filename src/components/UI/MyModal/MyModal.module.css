@@ -15,38 +15,17 @@
     align-items: center;
 }
 
-.myModalWrapper {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-}
+
 
 .myModalContent {
     padding: 25px;
     height: 500px;
     background: #fff;
-    border-radius: 8px 0 8px 8px;
+    border-radius: 8px;
     min-width: 600px;
     border: 3px solid cornflowerblue;
     margin-bottom: 22px;
     position: relative;
 }
 
-.closeBtn {
-    position: absolute;
-    border: 3px solid cornflowerblue;
-    border-radius: 9px 9px 0 0;
-    width: 200px;
-    border-bottom: none;
-    cursor: pointer;
-    padding: 2px 0;
-    background: cornflowerblue;
-    color: white;
-    font-weight: bold;
-    font-family: 'Arial', sans-serif;
-    top: -24px;
-    right: -3px;
-}
 

@@ -1,5 +1,7 @@
 import PostItem from "./PostItem.jsx";
 import WarningPost from "./UI/Warning/WarningPost.jsx";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
+import React from 'react';
 
 const PostLIst = ({posts, title, remove}) => {
 
@@ -10,9 +12,19 @@ const PostLIst = ({posts, title, remove}) => {
     return (
         <div className='PostList'>
             <h3>{title}</h3>
-            {
-                posts.map((p, index) => <PostItem remove={remove}  number={index + 1} post={p} key={p.id}/>)
-            }
+            <TransitionGroup>
+                {
+                    posts.map((p, index) => (
+                        <CSSTransition
+                            key={p.id}
+                            timeout={500}
+                            classNames="post"
+                        >
+                            <PostItem post={p} number={index + 1} remove={remove}/>
+                        </CSSTransition>
+                    ))
+                }
+            </TransitionGroup>
         </div>
     );
 };
