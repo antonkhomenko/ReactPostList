@@ -47,6 +47,7 @@
 .PostSort-block {
     display: flex;
     justify-content: flex-end;
+    margin: 10px 0;
 }
 
 .PostSearch {
@@ -68,7 +69,7 @@
 
 
 .post-enter {
-    transform: translateX(-800px);
+    transform: translateX(-400px);
 }
 .post-enter-active {
     transform: translateX(0px);
@@ -79,5 +80,5 @@
 }
 .post-exit-active {
     transition: all 500ms ease-in;
-    transform: translateX(-800px);
+    transform: translateX(-400px);
 }
