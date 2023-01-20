@@ -1,0 +1,17 @@
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 10px dotted cornflowerblue;
+    border-radius: 50%;
+    transform: rotate(300deg);
+    animation: rotate 3s infinite linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

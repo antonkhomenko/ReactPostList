@@ -12,6 +12,7 @@ import MyButton from "./components/UI/button/MyButton.jsx";
 import {usePost} from "./hooks/usePost.js";
 import axios from "axios";
 import PostService from "./API/PostService.js";
+import Loader from "./components/UI/Loader/Loader.jsx";
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
     const [posts, setPosts] = useState([]);
     const [filter, setFilter] = useState({sort: '', searchQuery: ''});
     const [modal, setModal] = useState(false);
+    const [isPostsLoading, setIsPostsLoading] = useState(false);
     const searchedSortedPosts = usePost(posts, filter.sort, filter.searchQuery);
 
     function addPostToState(newPost) {
@@ -31,8 +33,13 @@ export default function App() {
     }
 
     async function fetchPosts() {
-        const posts =  await PostService.getAll();
-        setPosts(posts);
+        setIsPostsLoading(true);
+        setTimeout(async() => {
+            const posts =  await PostService.getAll();
+            setPosts(posts);
+            setIsPostsLoading(false);
+        }, 1000);
+
     }
 
 
@@ -53,7 +60,14 @@ export default function App() {
                 filter={filter}
                 setFilter={setFilter}
             />
-            <PostLIst posts={searchedSortedPosts} remove={deletePost} title='Posts List'/>
+            {isPostsLoading
+                ? <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                    <Loader/>
+                    <span style={{color: 'gray', marginTop: '10px'}}>Please waite posts is loading</span>
+                </div>
+                : <PostLIst posts={searchedSortedPosts} title="Posts List" remove={deletePost}/>
+            }
+
         </div>
     )
 }
