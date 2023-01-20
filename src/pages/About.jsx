@@ -10,7 +10,10 @@ const About = () => {
                 <img src={arrow} alt="arrow-icon"/>
             </Link>
             <div className="AboutPage__wrapper">
-                <h3 className='AboutPage__title'>About</h3>
+                <h3 className='AboutPage__title'>
+                    <span className='AboutPage__emoji'>👋</span>
+                    About
+                </h3>
                 <div className='About__content'>
                     <div className="About__user">
                         <img
