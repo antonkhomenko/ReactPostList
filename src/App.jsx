@@ -3,17 +3,15 @@ import React from 'react';
 import './style/App.css';
 import PostLIst from "./components/PostLIst.jsx";
 import PostForm from "./components/PostForm.jsx";
-import WarningPost from "./components/UI/Warning/WarningPost.jsx";
-import MySelect from "./components/UI/select/MySelect.jsx";
-import PostSearch from "./components/PostSearch.jsx";
 import PostFilter from "./components/PostFilter.jsx";
 import MyModal from "./components/UI/MyModal/MyModal.jsx";
 import MyButton from "./components/UI/button/MyButton.jsx";
 import {usePost} from "./hooks/usePost.js";
-import axios from "axios";
 import PostService from "./API/PostService.js";
 import Loader from "./components/UI/Loader/Loader.jsx";
 import useFetching from "./hooks/useFetching.js";
+import pages from "./utils/pages.js";
+import usePagination from "./hooks/usePagination.js";
 
 
 export default function App() {
@@ -21,11 +19,23 @@ export default function App() {
     const [posts, setPosts] = useState([]);
     const [filter, setFilter] = useState({sort: '', searchQuery: ''});
     const [modal, setModal] = useState(false);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalPosts, setTotalPosts] = useState(0);
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
     const searchedSortedPosts = usePost(posts, filter.sort, filter.searchQuery);
+
+
+    const pageArray = usePagination(totalPages);
+
     const [fetchPost, isPostLoading, postError ] = useFetching(async() => {
-        const posts =  await PostService.getAll();
-        setPosts(posts);
+        const response =  await PostService.getAll(limit, page);
+        setPosts(response.data);
+        const totalCount = response.headers['x-total-count'];
+        setTotalPosts(totalCount);
+        setTotalPages(pages(totalCount, limit));
     });
+
 
     function addPostToState(newPost) {
         setPosts([...posts, newPost]);
@@ -33,19 +43,27 @@ export default function App() {
     }
 
     function deletePost(post) {
+        setTotalPosts(totalPosts - 1);
         setPosts(posts.filter(p => p.id !== post.id));
     }
 
+    function changePage(pageNumber) {
+        setPage(pageNumber);
+        fetchPost();
+
+    }
 
 
     useEffect(() => {
         fetchPost();
     }, [filter]);
 
+
+
     return (
         <div className='App'>
             <div className='PostHeader'>
-                <span className='PostHeader__counter'>Posts: {posts.length}</span>
+                <span className='Posts__counter'>Total posts: {totalPosts}</span>
                 <MyButton onClick={() => setModal(true)}>Create post</MyButton>
             </div>
             <MyModal visible={modal} setVisible={setModal}>
@@ -61,9 +79,13 @@ export default function App() {
                     <Loader/>
                     <span style={{color: 'gray', marginTop: '10px'}}>Please waite posts is loading</span>
                 </div>
-                : <PostLIst posts={searchedSortedPosts} title="Posts List" remove={deletePost}/>
+                : <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
             }
-
+            <div className='PostNavigationBlock'>
+                {pageArray.map(p => <MyButton key={p} addClass={page !== p ? 'inactiveBtn' : ''} onClick={() => changePage(p)}>
+                    {p}
+                </MyButton>)}
+            </div>
         </div>
     )
 }

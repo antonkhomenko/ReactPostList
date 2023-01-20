@@ -11,7 +11,12 @@ const PostLIst = ({posts, title, remove}) => {
 
     return (
         <div className='PostList'>
-            <h3>{title}</h3>
+            <div className='PostList__header'>
+                <span className='PostList__title'>{title}</span>
+                <span className='Posts__counter'>
+                    Posts on this page: {posts.length}
+                </span>
+            </div>
             <TransitionGroup>
                 {
                     posts.map((p, index) => (

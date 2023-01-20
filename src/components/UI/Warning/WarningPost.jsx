@@ -3,9 +3,10 @@ import classes from './WarningPost.module.css';
 const WarningPost = () => {
     return (
         <div className={classes.warningPost}>
-            <h3>You dont have any post yet or your search term does not match any of the existing posts</h3>
+            <h3>You have no posts</h3>
             <p>
-                Please use form above to add some post
+                You don't have a post, or your search term doesn't match any existing posts.
+                Please use the create post button to create posts.
             </p>
         </div>
     );

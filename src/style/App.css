@@ -62,11 +62,30 @@
     align-items: center;
 }
 
-.PostHeader__counter {
+.Posts__counter {
     color: #807e7e;
     font-size: 16px;
 }
 
+.PostList__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 10px 0;
+}
+
+.PostList__title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.PostNavigationBlock {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 
 .post-enter {
     transform: translateX(-400px);
@@ -81,4 +100,10 @@
 .post-exit-active {
     transition: all 500ms ease-in;
     transform: translateX(-400px);
+}
+
+.inactiveBtn {
+    background-color: #fff !important;
+    color: cornflowerblue !important;
+    font-weight: bold !important;
 }
