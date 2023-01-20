@@ -1,4 +1,4 @@
-import {useMemo, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import React from 'react';
 import './style/App.css';
 import PostLIst from "./components/PostLIst.jsx";
@@ -10,6 +10,8 @@ import PostFilter from "./components/PostFilter.jsx";
 import MyModal from "./components/UI/MyModal/MyModal.jsx";
 import MyButton from "./components/UI/button/MyButton.jsx";
 import {usePost} from "./hooks/usePost.js";
+import axios from "axios";
+import PostService from "./API/PostService.js";
 
 
 export default function App() {
@@ -27,11 +29,16 @@ export default function App() {
     function deletePost(post) {
         setPosts(posts.filter(p => p.id !== post.id));
     }
-    //
-    // function sortPosts(sortType) {
-    //     setFilter({...filter, sort: sortType});
-    // }
 
+    async function fetchPosts() {
+        const posts =  await PostService.getAll();
+        setPosts(posts);
+    }
+
+
+    useEffect(() => {
+        fetchPosts();
+    }, [filter]);
 
     return (
         <div className='App'>
