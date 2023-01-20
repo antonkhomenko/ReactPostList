@@ -12,6 +12,7 @@ import Loader from "./components/UI/Loader/Loader.jsx";
 import useFetching from "./hooks/useFetching.js";
 import pages from "./utils/pages.js";
 import usePagination from "./hooks/usePagination.js";
+import Pagination from "./components/UI/Pagination/Pagination.jsx";
 
 
 export default function App() {
@@ -21,7 +22,7 @@ export default function App() {
     const [modal, setModal] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
     const [totalPosts, setTotalPosts] = useState(0);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(20);
     const [page, setPage] = useState(1);
     const searchedSortedPosts = usePost(posts, filter.sort, filter.searchQuery);
 
@@ -49,14 +50,12 @@ export default function App() {
 
     function changePage(pageNumber) {
         setPage(pageNumber);
-        fetchPost();
-
     }
 
 
     useEffect(() => {
         fetchPost();
-    }, [filter]);
+    }, [filter, page]);
 
 
 
@@ -81,11 +80,7 @@ export default function App() {
                 </div>
                 : <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
             }
-            <div className='PostNavigationBlock'>
-                {pageArray.map(p => <MyButton key={p} addClass={page !== p ? 'inactiveBtn' : ''} onClick={() => changePage(p)}>
-                    {p}
-                </MyButton>)}
-            </div>
+            <Pagination changePage={changePage} totalPages={totalPages} currentPage={page}/>
         </div>
     )
 }
