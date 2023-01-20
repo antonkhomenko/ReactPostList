@@ -22,7 +22,8 @@
     height: 500px;
     background: #fff;
     border-radius: 8px;
-    min-width: 600px;
+    max-width: 600px;
+    width: 70%;
     border: 3px solid cornflowerblue;
     margin-bottom: 22px;
     position: relative;

@@ -1,0 +1,90 @@
+.AboutPage {
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: cornflowerblue;
+}
+
+.AboutPage__wrapper {
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 80px;
+}
+
+
+
+.About__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 80px;
+}
+
+.About__user {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.About__user-img {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    border: 8px solid white;
+    box-shadow: rgba(0, 23, 138, 0.2) 20px 10px 8px 0px;
+}
+
+.About__user-name {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.About__content-text {
+    color: white;
+    display: flex;
+    height: 400px;
+    font-size: 18px;
+    line-height: 35px;
+    font-weight: lighter;
+}
+
+.AboutBackBtn {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+}
+
+.AboutBackBtn > img {
+    width: 50px;
+}
+
+.AboutBackBtn > img:hover {
+    transform: scale(110%);
+}
+
+.AboutPage__title {
+    color: white;
+    font-size: 36px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    /*animation: wave 500ms infinite linear;*/
+}
+
+
+@keyframes wave {
+    from {
+        text-decoration: white solid underline;
+    }
+    to {
+        text-decoration: white wavy underline;
+    }
+}

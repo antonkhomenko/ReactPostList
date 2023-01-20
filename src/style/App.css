@@ -99,11 +99,34 @@
 }
 .post-exit-active {
     transition: all 500ms ease-in;
-    transform: translateX(-400px);
+    transform: translateX(-800px);
 }
 
 .inactiveBtn {
     background-color: #fff !important;
     color: cornflowerblue !important;
     font-weight: bold !important;
+}
+
+
+.App__nextPageBtn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+}
+
+.App__nextPageBtn > img {
+    width: 50px;
+}
+
+.App__nextPageBtn > img:hover {
+    transform: scale(110%);
+}
+
+
+@media screen and (max-width: 800px) {
+    .App {
+        width: 100%;
+        padding: 0 20px;
+    }
 }

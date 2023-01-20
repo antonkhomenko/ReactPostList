@@ -3,7 +3,7 @@ import MyTextArea from "./UI/textarea/MyTextArea.jsx";
 import MyButton from "./UI/button/MyButton.jsx";
 import React, {useRef, useState} from "react";
 
-const PostForm = ({create}) => {
+const PostForm = ({create, changeTotal, total}) => {
 
     const [post, setPost] = useState({title: ''});
     const bodyInputRef = useRef();
@@ -17,10 +17,12 @@ const PostForm = ({create}) => {
             return;
         }
 
+        changeTotal();
+
         const newPost = {
             title: post.title,
             body: postBody,
-            id: Date.now(),
+            id: +total + 1,
         }
 
         create(newPost);
