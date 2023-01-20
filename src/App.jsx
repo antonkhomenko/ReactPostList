@@ -13,6 +13,7 @@ import {usePost} from "./hooks/usePost.js";
 import axios from "axios";
 import PostService from "./API/PostService.js";
 import Loader from "./components/UI/Loader/Loader.jsx";
+import useFetching from "./hooks/useFetching.js";
 
 
 export default function App() {
@@ -20,8 +21,11 @@ export default function App() {
     const [posts, setPosts] = useState([]);
     const [filter, setFilter] = useState({sort: '', searchQuery: ''});
     const [modal, setModal] = useState(false);
-    const [isPostsLoading, setIsPostsLoading] = useState(false);
     const searchedSortedPosts = usePost(posts, filter.sort, filter.searchQuery);
+    const [fetchPost, isPostLoading, postError ] = useFetching(async() => {
+        const posts =  await PostService.getAll();
+        setPosts(posts);
+    });
 
     function addPostToState(newPost) {
         setPosts([...posts, newPost]);
@@ -32,19 +36,10 @@ export default function App() {
         setPosts(posts.filter(p => p.id !== post.id));
     }
 
-    async function fetchPosts() {
-        setIsPostsLoading(true);
-        setTimeout(async() => {
-            const posts =  await PostService.getAll();
-            setPosts(posts);
-            setIsPostsLoading(false);
-        }, 1000);
-
-    }
 
 
     useEffect(() => {
-        fetchPosts();
+        fetchPost();
     }, [filter]);
 
     return (
@@ -60,7 +55,8 @@ export default function App() {
                 filter={filter}
                 setFilter={setFilter}
             />
-            {isPostsLoading
+            {postError && <span>Something goes wrong... {postError}</span>}
+            {isPostLoading
                 ? <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                     <Loader/>
                     <span style={{color: 'gray', marginTop: '10px'}}>Please waite posts is loading</span>
