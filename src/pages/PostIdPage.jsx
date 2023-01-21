@@ -36,7 +36,7 @@ const PostIdPage = () => {
         <div className='PostPage'>
             <div className='PostPage__wrapper'>
                 <div className='PostPage__navigation'>
-                    <MyButton onClick={() => navigation('/')}>⬅ Back</MyButton>
+                    <MyButton onClick={() => navigation('/posts')}>⬅ Back</MyButton>
                 </div>
                 {isPostLoading
                     ? <Loader/>

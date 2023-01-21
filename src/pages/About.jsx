@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 const About = () => {
     return (
         <div className='AboutPage'>
-            <Link className='AboutBackBtn' to='/'>
+            <Link className='AboutBackBtn' to='/posts'>
                 <img src={arrow} alt="arrow-icon"/>
             </Link>
             <div className="AboutPage__wrapper">

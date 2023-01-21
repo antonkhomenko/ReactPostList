@@ -14,7 +14,7 @@ export default function  PostItem(props) {
                 </article>
             </div>
             <div className='Post__button-wrapper'>
-                <MyButton onClick={() => navigate(`/post/${props.post.id}`)}>Open post</MyButton>
+                <MyButton onClick={() => navigate(`/posts/${props.post.id}`)}>Open post</MyButton>
                 <DeleteButton onClick={() => props.remove(props.post)}/>
             </div>
         </div>

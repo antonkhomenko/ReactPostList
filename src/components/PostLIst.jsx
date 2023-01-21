@@ -3,9 +3,9 @@ import WarningPost from "./UI/Warning/WarningPost.jsx";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import React from 'react';
 
-const PostLIst = ({posts, title, remove}) => {
+const PostLIst = ({posts, title, remove, isLoading}) => {
 
-    if(!posts.length) {
+    if(!posts.length && !isLoading) {
         return <WarningPost/>
     }
 

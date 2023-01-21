@@ -8,7 +8,7 @@ const Error = () => {
                 <h1 className='ErrorPage__title'>Sorry, but we dont have page for such url 😰</h1>
                 <p className='ErrorPage__message'>Please check your url request or go to one of the existing pages</p>
                 <div className='ErrorPage__pageList'>
-                    <Link to='/' className='ErrorPage__pageList-item'>
+                    <Link to='/posts' className='ErrorPage__pageList-item'>
                         👉 Posts
                     </Link>
                     <Link to='/about' className='ErrorPage__pageList-item'>
