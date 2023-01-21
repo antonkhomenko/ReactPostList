@@ -90,7 +90,7 @@ export default function App() {
 
     function changeEndlessPage(e) {
         setIsInfinityTape(e.target.checked);
-        if(!isInfinityTape) {
+        if(!e.target.checked) {
             setLimit(10);
             setPage(1);
         }
@@ -136,7 +136,7 @@ export default function App() {
                     </div>
                 }
                 <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
-                <div style={{height: '20px', backgroundColor: 'red', marginTop: '20px'}} ref={lastElement}>
+                <div style={{height: '10px', marginTop: '5px'}} ref={lastElement}>
                 </div>
                 {!isInfinityTape &&  <Pagination changePage={changePage} totalPages={totalPages} currentPage={page}/>}
             </div>
