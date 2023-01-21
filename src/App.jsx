@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from "react";
+import React, {createContext, useContext, useEffect, useRef, useState} from "react";
 import './style/App.css';
 import PostLIst from "./components/PostLIst.jsx";
 import PostForm from "./components/PostForm.jsx";
@@ -35,9 +35,16 @@ export default function App() {
 
     const pageArray = usePagination(totalPages);
 
+    const lastElement = useRef();
+    const observer = useRef();
+
     const [fetchPost, isPostLoading, postError ] = useFetching(async() => {
         const response =  await PostService.getAll(limit, page);
-        setPosts(response.data);
+        if(isInfinityTape) {
+            setPosts([...posts, ...response.data])
+        } else {
+            setPosts(response.data);
+        }
         const totalCount = response.headers['x-total-count'];
         setTotalPosts(totalCount);
         setTotalPages(pages(totalCount, limit));
@@ -63,15 +70,37 @@ export default function App() {
         fetchPost();
     }, [page, limit]);
 
+
+    useEffect(() => {
+        if(isPostLoading) return;
+        if(observer.current) observer.current.disconnect();
+        const callback = function(entries, observer) {
+            if(entries[0].isIntersecting && isInfinityTape && page < totalPages) {
+                setPage(page + 1);
+            }
+        };
+        observer.current = new IntersectionObserver(callback);
+        observer.current.observe(lastElement.current);
+    }, [isPostLoading, isInfinityTape])
+
+
     function changeTotalPost() {
         setTotalPosts(prev => +prev + 1);
+    }
+
+    function changeEndlessPage(e) {
+        setIsInfinityTape(e.target.checked);
+        if(!isInfinityTape) {
+            setLimit(10);
+            setPage(1);
+        }
     }
 
     return (
         <TapeContext.Provider
             value={{
             isInfinityTape,
-            setIsInfinityTape,
+            setIsInfinityTape: changeEndlessPage,
         }}>
             <div className='App'>
                 <Link className='App__nextPageBtn' to='/about'>
@@ -94,8 +123,9 @@ export default function App() {
                     changeLimit={setLimit}
                 />
                 {postError && <span>Something goes wrong... {postError}</span>}
+
                 {isPostLoading
-                    ? <div style={{
+                    && <div style={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -104,9 +134,11 @@ export default function App() {
                         <Loader/>
                         <span style={{color: 'gray', marginTop: '10px'}}>Please waite posts is loading</span>
                     </div>
-                    : <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
                 }
-                <Pagination changePage={changePage} totalPages={totalPages} currentPage={page}/>
+                <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
+                <div style={{height: '20px', backgroundColor: 'red', marginTop: '20px'}} ref={lastElement}>
+                </div>
+                {!isInfinityTape &&  <Pagination changePage={changePage} totalPages={totalPages} currentPage={page}/>}
             </div>
         </TapeContext.Provider>
     )

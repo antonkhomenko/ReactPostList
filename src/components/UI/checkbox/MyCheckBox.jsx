@@ -8,7 +8,7 @@ const MyCheckBox = ({name}) => {
 
     return (
             <div className={classes.wrapper}>
-                <input type="checkbox" id='endless-tape' className={classes.endlessTape__checkbox} onChange={(e) => setIsInfinityTape(e.target.checked)}/>
+                <input type="checkbox" id='endless-tape' className={classes.endlessTape__checkbox} onChange={(e) => setIsInfinityTape(e)}/>
                 <label htmlFor="endless-tape">{name}</label>
             </div>
     );

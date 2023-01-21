@@ -1,3 +1,3 @@
 import {createContext} from "react";
 
-export const TapeContext = createContext(null);
+export const TapeContext = createContext({});
