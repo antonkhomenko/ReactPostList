@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 import './style/App.css';
 import PostLIst from "./components/PostLIst.jsx";
 import PostForm from "./components/PostForm.jsx";
@@ -14,6 +14,7 @@ import usePagination from "./hooks/usePagination.js";
 import Pagination from "./components/UI/Pagination/Pagination.jsx";
 import arrow from './assets/arrow-right.svg';
 import {Link} from "react-router-dom";
+import {TapeContext} from "./context/context.js";
 
 
 export default function App() {
@@ -25,6 +26,8 @@ export default function App() {
     const [totalPosts, setTotalPosts] = useState(0);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
+
+    const [isInfinityTape, setIsInfinityTape] = useState(false);
 
 
     const searchedSortedPosts = usePost(posts, filter.sort, filter.searchQuery);
@@ -65,35 +68,46 @@ export default function App() {
     }
 
     return (
-        <div className='App'>
-            <Link className='App__nextPageBtn' to='/about'>
-                <img src={arrow} alt="arrow-icon"/>
-            </Link>
-            <div className='PostHeader'>
-                <span className='Posts__counter'>Total posts: {totalPosts}</span>
-                <MyButton onClick={() => setModal(true)}>Create post</MyButton>
-            </div>
-            <MyModal visible={modal} setVisible={setModal}>
-                <PostForm
-                    create={addPostToState}
-                    changeTotal={changeTotalPost}
-                    total={totalPosts}
-                />
-            </MyModal>
-            <PostFilter
-                filter={filter}
-                setFilter={setFilter}
-                changeLimit={setLimit}
-            />
-            {postError && <span>Something goes wrong... {postError}</span>}
-            {isPostLoading
-                ? <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                    <Loader/>
-                    <span style={{color: 'gray', marginTop: '10px'}}>Please waite posts is loading</span>
+        <TapeContext.Provider
+            value={{
+            isInfinityTape,
+            setIsInfinityTape,
+        }}>
+            <div className='App'>
+                <Link className='App__nextPageBtn' to='/about'>
+                    <img src={arrow} alt="arrow-icon"/>
+                </Link>
+                <div className='PostHeader'>
+                    <span className='Posts__counter'>Total posts: {totalPosts}</span>
+                    <MyButton onClick={() => setModal(true)}>Create post</MyButton>
                 </div>
-                : <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
-            }
-            <Pagination changePage={changePage} totalPages={totalPages} currentPage={page}/>
-        </div>
+                <MyModal visible={modal} setVisible={setModal}>
+                    <PostForm
+                        create={addPostToState}
+                        changeTotal={changeTotalPost}
+                        total={totalPosts}
+                    />
+                </MyModal>
+                <PostFilter
+                    filter={filter}
+                    setFilter={setFilter}
+                    changeLimit={setLimit}
+                />
+                {postError && <span>Something goes wrong... {postError}</span>}
+                {isPostLoading
+                    ? <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <Loader/>
+                        <span style={{color: 'gray', marginTop: '10px'}}>Please waite posts is loading</span>
+                    </div>
+                    : <PostLIst posts={searchedSortedPosts} title="Posts from jsonplaceholder" remove={deletePost}/>
+                }
+                <Pagination changePage={changePage} totalPages={totalPages} currentPage={page}/>
+            </div>
+        </TapeContext.Provider>
     )
 }

@@ -4,6 +4,7 @@ import MySelect from "./UI/select/MySelect.jsx";
 import MyCheckBox from "./UI/checkbox/MyCheckBox.jsx";
 
 const PostFilter = ({filter, setFilter, changeLimit}) => {
+
     return (
         <div>
             <PostSearch value={filter.searchQuery} onChange={(e) => setFilter({...filter, searchQuery: e.target.value})}/>
