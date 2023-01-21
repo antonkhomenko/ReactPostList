@@ -15,6 +15,7 @@ import Pagination from "./components/UI/Pagination/Pagination.jsx";
 import arrow from './assets/arrow-right.svg';
 import {Link} from "react-router-dom";
 import {TapeContext} from "./context/context.js";
+import {useObserver} from "./hooks/useObserver.js";
 
 
 export default function App() {
@@ -36,7 +37,6 @@ export default function App() {
     const pageArray = usePagination(totalPages);
 
     const lastElement = useRef();
-    const observer = useRef();
 
     const [fetchPost, isPostLoading, postError ] = useFetching(async() => {
         const response =  await PostService.getAll(limit, page);
@@ -71,17 +71,11 @@ export default function App() {
     }, [page, limit]);
 
 
-    useEffect(() => {
-        if(isPostLoading) return;
-        if(observer.current) observer.current.disconnect();
-        const callback = function(entries, observer) {
-            if(entries[0].isIntersecting && isInfinityTape && page < totalPages) {
-                setPage(page + 1);
-            }
-        };
-        observer.current = new IntersectionObserver(callback);
-        observer.current.observe(lastElement.current);
-    }, [isPostLoading, isInfinityTape])
+
+    useObserver(lastElement, () => setPage(page + 1),
+        isPostLoading, isInfinityTape, (isInfinityTape && page < totalPages)
+    );
+
 
 
     function changeTotalPost() {
