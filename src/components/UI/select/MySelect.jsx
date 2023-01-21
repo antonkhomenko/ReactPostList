@@ -9,7 +9,7 @@ const MySelect = ({options, value, onChange, defaultValue}) => {
             value={value}
             onChange={onChange}
         >
-            <option disabled>{defaultValue}</option>
+            <option disabled={true}>{defaultValue}</option>
             {options.map(o =>
                 <option value={o.value} key={o.value}>
                     {o.name}

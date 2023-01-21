@@ -23,7 +23,7 @@ export default function App() {
     const [modal, setModal] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
     const [totalPosts, setTotalPosts] = useState(0);
-    const [limit, setLimit] = useState(20);
+    const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
 
 
@@ -58,7 +58,7 @@ export default function App() {
 
     useEffect(() => {
         fetchPost();
-    }, [page]);
+    }, [page, limit]);
 
     function changeTotalPost() {
         setTotalPosts(prev => +prev + 1);
@@ -74,11 +74,16 @@ export default function App() {
                 <MyButton onClick={() => setModal(true)}>Create post</MyButton>
             </div>
             <MyModal visible={modal} setVisible={setModal}>
-                <PostForm create={addPostToState} changeTotal={changeTotalPost} total={totalPosts}/>
+                <PostForm
+                    create={addPostToState}
+                    changeTotal={changeTotalPost}
+                    total={totalPosts}
+                />
             </MyModal>
             <PostFilter
                 filter={filter}
                 setFilter={setFilter}
+                changeLimit={setLimit}
             />
             {postError && <span>Something goes wrong... {postError}</span>}
             {isPostLoading
