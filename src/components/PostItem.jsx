@@ -1,8 +1,10 @@
 import DeleteButton from "./UI/button/DeleteButton.jsx";
 import React from 'react';
+import MyButton from "./UI/button/MyButton.jsx";
+import {useNavigate} from 'react-router-dom';
 
-export default function PostItem(props) {
-
+export default function  PostItem(props) {
+    const navigate = useNavigate();
     return (
         <div className='Post'>
             <div className='Post__content'>
@@ -11,7 +13,10 @@ export default function PostItem(props) {
                     {props.post.body}
                 </article>
             </div>
-            <DeleteButton onClick={() => props.remove(props.post)}/>
+            <div className='Post__button-wrapper'>
+                <MyButton onClick={() => navigate(`/post/${props.post.id}`)}>Open post</MyButton>
+                <DeleteButton onClick={() => props.remove(props.post)}/>
+            </div>
         </div>
     );
 }

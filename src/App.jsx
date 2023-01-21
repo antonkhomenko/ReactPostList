@@ -58,7 +58,7 @@ export default function App() {
 
     useEffect(() => {
         fetchPost();
-    }, [filter, page]);
+    }, [page]);
 
     function changeTotalPost() {
         setTotalPosts(prev => +prev + 1);
