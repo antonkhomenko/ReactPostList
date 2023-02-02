@@ -23,16 +23,19 @@ const App = () => {
             isAuth,
             setIsAuth,
         }}>
-            {!isAuth
+            {(!isAuth)
             ? <Routes>
                     <Route path='/login' element={<Login/>}/>
-                    {/*<Route path='*' element={<Navigate to='/login' replace/>} />*/}
-                </Routes>
-                : <Routes>
+                    <Route path='/' element={<Login/>} />
+              </Routes> :
+                <Routes>
+                    <Route path='/' element={<Navigate to='/posts' replace/>} />
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/posts' element={<Post/>}/>
                     <Route path='/posts/:id' element={<PostIdPage/>}/>
                     <Route path='/about' element={<About/>} exact={true}/>
+                    <Route path='/error' element={<Error/>}/>
+                    <Route path='*' element={<Navigate to='/error' replace/>} />
                 </Routes>
             }
 
